@@ -53,6 +53,7 @@ def channel_add(channel):
         }
         message = json.dumps(r, ensure_ascii=False)
         print('debug\nmessge: {}\nchannel: {}'.format(message, channel))
+        redis_client.publish(channel, message)
         # 用 redis 发布消息
         return 'OK', 200
 
