@@ -1,12 +1,14 @@
 # coding: utf-8
 from src.redis_channel import stream, redis_client, Chat_Channels, exist_channel
 
-import flask
-from flask import request, redirect, url_for
+from flask import Flask
+from flask import request
+from flask import render_template
+from flask import redirect, url_for, Response, abort
 import time
 import json
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 app.secret_key = 'key'
 
 
@@ -22,26 +24,26 @@ def args_for_base():
 
 @app.route('/')
 def index():
-    # return flask.render_template('base.html')
+    # return render_template('base.html')
     return redirect(url_for('channel', channel='chat'))
 
 
 @app.route('/<string:channel>')
 def channel(channel):
     if not exist_channel(channel):
-        flask.abort(404)
+        abort(404)
     else:
         data = dict(
             channel_name=channel,
             channel_title=Chat_Channels.get(channel),
         )
-        return flask.render_template('channel.html', **data)
+        return render_template('channel.html', **data)
 
 
 @app.route('/<string:channel>/add', methods=['POST'])
 def channel_add(channel):
     if not exist_channel(channel):
-        flask.abort(404)
+        abort(404)
     else:
         msg = request.get_json()
         name = msg.get('name', '<匿名>')
@@ -61,6 +63,6 @@ def channel_add(channel):
 @app.route('/<string:channel>/subscribe')
 def channel_subscribe(channel):
     if not exist_channel(channel):
-        flask.abort(404)
+        abort(404)
     else:
-        return flask.Response(stream(channel), mimetype="text/event-stream")
+        return Response(stream(channel), mimetype="text/event-stream")

@@ -36,7 +36,7 @@ def flask_app():
 
 
 if __name__ == '__main__':
-    gunicorn_app(workers=8)
+    gunicorn_app(tolog=True)
     # flask_app()
 
 '''
