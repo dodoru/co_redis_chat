@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>聊天室</title>
-    <link rel="stylesheet" href="/static/css/pure-min.css">
-    <link rel="stylesheet" href="/static/css/chat.css">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/pure-min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/chat.css') }}">
 </head>
 <body data-channel="public">
 <div id="layout">
@@ -15,16 +15,26 @@
     <div id="menu">
         <div class="pure-menu">
             <a class="pure-menu-heading" href="#">聊天室</a>
-
             <ul class="pure-menu-list" id="id-channel-list">
+                {% for channel_name,channel_title in chat_channels.items() %}
+                    <li class="pure-menu-item">
+                        <a href="{{ url_for('channel',channel=channel_name) }}" class="pure-menu-link"
+                           data-channel="{{ channel_name }}">{{ channel_title }}</a>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
 
     <div id="main">
+
+        {% block board %}
+
+        {% endblock %}
+
         <div class="content" id="id-div-chats">
         </div>
-        <div class="editor" >
+        <div class="editor">
             <form class="pure-form pure-form-stacked">
                 <input id='id-input-name' type="text" placeholder="名字">
                 <textarea id='id-input-content' placeholder="内容"></textarea>
@@ -33,7 +43,8 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/chat.js">    </script>
+
+{% block script %}
+{% endblock %}
 </body>
 </html>

@@ -3,6 +3,7 @@
 __author__ = 'nico'
 
 import os
+from src.redis_chat_app import app
 
 
 def install_gunicorn():
@@ -10,10 +11,10 @@ def install_gunicorn():
     os.system(command=command)
 
 
-def gunicorn_app(app='redis_chat:app',
+def gunicorn_app(app='redis_chat_app:app',
                  host='localhost',
                  port='8000',
-                 timeout=999,
+                 timeout=60,
                  workers=1,
                  debug=True,
                  tolog=False,
@@ -30,8 +31,13 @@ def gunicorn_app(app='redis_chat:app',
     os.system(command)
 
 
+def flask_app():
+    app.run(debug=True)
+
+
 if __name__ == '__main__':
-    gunicorn_app()
+    gunicorn_app(workers=8)
+    # flask_app()
 
 '''
 # 使用 gunicorn 启动
