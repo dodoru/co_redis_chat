@@ -21,7 +21,6 @@ def args_for_base():
 
 
 @app.route('/')
-@app.route('/chat')
 def index():
     # return flask.render_template('base.html')
     return redirect(url_for('channel', channel='chat'))
