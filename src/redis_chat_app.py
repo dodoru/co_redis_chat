@@ -22,13 +22,19 @@ def args_for_base():
     return args
 
 
+@app.route('/ping')
+def ping():
+    return 'pong'
+
+
 @app.route('/')
 def index():
-    # return render_template('base.html')
-    return redirect(url_for('channel', channel='chat'))
+    return render_template('base.html')
+    # return redirect(url_for('channel', channel='chat'))
+    # return 'pong'
 
 
-@app.route('/<string:channel>')
+@app.route('/<channel>', methods=['GET'])
 def channel(channel):
     if not exist_channel(channel):
         abort(404)
@@ -40,7 +46,7 @@ def channel(channel):
         return render_template('channel.html', **data)
 
 
-@app.route('/<string:channel>/add', methods=['POST'])
+@app.route('/<channel>/add', methods=['POST'])
 def channel_add(channel):
     if not exist_channel(channel):
         abort(404)
@@ -60,7 +66,7 @@ def channel_add(channel):
         return 'OK', 200
 
 
-@app.route('/<string:channel>/subscribe')
+@app.route('/<channel>/subscribe', methods=['GET', 'POST'])
 def channel_subscribe(channel):
     if not exist_channel(channel):
         abort(404)
