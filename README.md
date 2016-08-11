@@ -1,6 +1,6 @@
 
 # Python 3.5
-python -V  # check python verion == 3.5
+>python -V  # check python verion == 3.5
 pyenv versions 
 pyenv activate 3.5.2
 pyenv virtualenv 3.5.2 env352
