@@ -80,10 +80,10 @@ var sendMessage = function (channel) {
     $.ajax(request);
 };
 
-var bindActions = function () {
+var bindActions = function (channel) {
     $('#id-button-send').on('click', function () {
         // $('#id-input-content').val();
-        sendMessage();
+        sendMessage(channel);
     });
 };
 
