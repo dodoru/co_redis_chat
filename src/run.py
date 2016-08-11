@@ -36,8 +36,8 @@ def flask_app():
 
 
 if __name__ == '__main__':
-    # gunicorn_app(tolog=True)
-    flask_app()
+    gunicorn_app(tolog=True)
+    # flask_app()
 
 '''
 # 使用 gunicorn 启动
