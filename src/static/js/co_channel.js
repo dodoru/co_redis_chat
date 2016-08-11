@@ -1,7 +1,9 @@
 /**
  * Created by nico on 16/8/11.
  */
-
+var log = function () {
+    console.log(arguments);
+};
 var chatItemTemplate = function (chat) {
     var name = chat.name;
     var content = chat.content;

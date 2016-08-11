@@ -12,11 +12,11 @@ print('redis', redis_client)
 # 发布聊天广播的 redis 频道
 # Chat_Channel_List = ['chat', 'basic', 'web', 'svip', 'book']
 Chat_Channels = {
-    'chat': '大工会',
-    'basic': '基础班',
-    'web': '掏粪班',
-    'book': '斧与包',
-    'svip': '塞亚人',
+    'chat': u'大工会',
+    'basic': u'基础班',
+    'web': u'掏粪班',
+    'book': u'斧与包',
+    'svip': u'塞亚人',
 }
 
 
