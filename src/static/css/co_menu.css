@@ -73,6 +73,12 @@ All anchors inside the menu should be styled like this.
     font-family: "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.pure-menu-item .active {
+    background: #cbcbcb;
+    color: #000;
+    font-weight: normal;
+}
+
 /*
 Remove all background/borders, since we are applying them to #menu.
 */
@@ -93,7 +99,7 @@ Add that light border to separate items into groups.
 /*
 Change color of the anchor links on hover/focus.
 */
-.active,
+
 #menu .pure-menu li a:hover,
 #menu .pure-menu li a:focus {
     background: #cbcbcb;

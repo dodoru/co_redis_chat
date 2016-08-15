@@ -79,6 +79,15 @@ var bindActions = function (channel) {
     });
 };
 
+var activeChannel = function (channel) {
+    $('.pure-menu-item a').each(function (i, element) {
+        console.log(i, element, $(this).data('channel'));
+        if ($(this).data('channel') === channel) {
+            $(this).addClass('active');
+            return false;
+        }
+    })
+};
 // long time ago
 var longTimeAgo = function () {
     var timeAgo = function (time, ago) {
@@ -115,6 +124,7 @@ var longTimeAgo = function () {
 var __main = function () {
     var channel = $('#currentChannel').data('name');
     console.log(channel, arguments);
+    activeChannel(channel);
     subscribe(channel);
     bindActions(channel);
     setInterval(function () {
