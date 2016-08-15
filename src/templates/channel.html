@@ -1,10 +1,51 @@
-{% extends 'base.html' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天室</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/pure-min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/co_menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/co_chat.css') }}">
+</head>
+<body data-channel="public">
+<div id="layout">
+    <a href="#menu" id="menuLink" class="menu-link">
+        <span></span>
+    </a>
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">聊天室</a>
+            <ul class="pure-menu-list" id="id-channel-list">
+                {% for channel_name,channel_title in chat_channels.items() %}
+                    <li class="pure-menu-item">
+                        <a href="{{ url_for('channel',channel=channel_name) }}" class="pure-menu-link"
+                           data-channel="{{ channel_name }}">{{ channel_title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
-{% block board %}
-    <h4 id="currentChannel" data-name="{{ channel_name }}">{{ channel_name }} - {{ channel_title }}</h4>
-{% endblock %}
+    <div id="main">
+        {% if channel_name %}
+            <h4 id="currentChannel" data-name="{{ channel_name }}">{{ channel_name }} - {{ channel_title }}</h4>
+        {% else %}
+            <h4 id="currentChannel" data-name="chat">chat - 大工会</h4>
+        {% endif %}
+        <div class="editor">
+            <form class="pure-form pure-form-stacked">
+                <input id='id-input-name' type="text" placeholder="名字">
+                <textarea id='id-input-content' placeholder="内容"></textarea>
+                <button id='id-button-send' type='button'>发送消息</button>
+            </form>
+        </div>
+        <div class="content" id="id-div-chats">
+        </div>
+    </div>
+</div>
 
-{% block script %}
-    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static',filename='js/co_channel.js') }}"></script>
-{% endblock %}
+<script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/co_channel.js') }}"></script>
+</body>
+</html>

@@ -52,14 +52,14 @@ def channel_add(channel):
         abort(404)
     else:
         msg = request.get_json()
-        name = msg.get('name', '<匿名>')
-        content = msg.get('content', '')
+        name = msg.get('name', '<匿名>').encode('utf-8')
+        content = msg.get('content', '').encode('utf-8')
         r = {
             'name': name,
             'content': content,
             'created_time': current_time()
         }
-        message = json.dumps(r, ensure_ascii=False)
+        message = json.dumps(r)
         print('debug\nmessge: {}\nchannel: {}'.format(message, channel))
         redis_client.publish(channel, message)
         # 用 redis 发布消息

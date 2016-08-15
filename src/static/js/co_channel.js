@@ -9,30 +9,20 @@ var chatItemTemplate = function (chat) {
     var content = chat.content;
     var time = chat.created_time;
     var t = `
-        <div class="chat-item burstStart read burstFinal">
-            <div class="chat-item__container">
-                <div class="chat-item__aside">
-                    <div class="chat-item__avatar">
-                        <span class="widget">
-                            <div class="trpDisplayPicture avatar-s">
-                                <img src="https://avatars0.githubusercontent.com/u/7235381?v=3&amp;s=30"  height="30" width="30" class="avatar__image" alt="">
-                            </div>
-                        </span>
-                    </div>
+        <div class="chat-item">
+            <div>
+                 <div class="chat-item__avatar">
+                      <img src="https://avatars0.githubusercontent.com/u/7235381?v=3&amp;s=30"  height="30" width="30" class="avatar__image" alt="">
+                 </div>
+                 <div class="chat-item__details">
+                    <span>${name}</span>
+                    <a href="#">
+                        <time data-time="${time}"></time>
+                    </a>
                 </div>
-                <div class="chat-item__actions js-chat-item-actions">
-                    <i class="chat-item__icon icon-check chat-item__icon--read chat-item__icon--read-by-some js-chat-item-readby"></i>
-                    <i class="chat-item__icon icon-ellipsis"></i>
-                </div>
-                <div class="chat-item__content">
-                    <div class="chat-item__details">
-                        <div class="chat-item__from js-chat-item-from">${name}</div>
-                        <a class="chat-item__time js-chat-time" href="#">
-                            <time data-time="${time}"></time>
-                        </a>
-                    </div>
-                    <div class="chat-item__text js-chat-item-text">${content}</div>
-                </div>
+            </div>
+            <div class="chat-item__content">
+                    ${content}
             </div>
         </div>
         `;
