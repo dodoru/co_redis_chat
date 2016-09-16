@@ -55,7 +55,7 @@ def channel_list(channel):
         start = args.get('start', -20)
         end = args.get('end', -1)  # -1 get all
         messages = redis_client.lrange(channel, start=start, end=end)  # 按时间顺序排列
-        messages = json.dumps(messages)
+        messages = json.dumps(messages, indent=4)
         return messages, 200
 
 

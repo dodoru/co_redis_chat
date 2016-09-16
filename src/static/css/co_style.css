@@ -22,15 +22,27 @@ div#id-div-board {
 }
 
 #id-div-panel {
-    padding: 20px;
-    display: flex;
-    position: fixed;
+    /*display: flex;*/
+    /*position: fixed;*/
+    clear:both;
     line-height: 14px;
     bottom: 0;
+    border-radius: 5px;
+    width: 80%;
+
+}
+
+#id-div-chats {
+    /*padding-bottom: 60em;*/
+}
+
+#id-div-panel form {
     border: 1px dashed #ccc;
     margin: 2rem;
-    border-radius: 5px;
-    width: 60%;
+    padding: 2rem;
+    right: 0;
+    background-color: white;
+
 }
 
 input.sai-form-line {

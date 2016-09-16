@@ -270,6 +270,8 @@ a.pure-menu-link.active {
     background-color: #135480;
 }
 
+
+
 .chat-item {
     margin: 10px;
     width: 100%;
@@ -306,4 +308,12 @@ img.user-avatar {
 
 .chat-item__content {
     margin-left: 3em;
+}
+
+
+#id-div-panel form {
+    border: 1px dashed #ccc;
+    margin: 2rem;
+    padding:2rem;
+    right:0;
 }
