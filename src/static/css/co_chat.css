@@ -67,12 +67,6 @@ h4#currentChannel {
     float: left;
 }
 
-.chat-item__avatar {
-    float: left;
-    height: 2.5em;
-    width: 2.5em;
-}
-
 .chat-item__details span {
     content: '匿名';
     color: #1f8dd6;
@@ -83,4 +77,8 @@ h4#currentChannel {
     text-decoration: none;
     color: #565d64;
     font-size: 0.8em;
+}
+
+a.pure-menu-link.active {
+    background-color: #135480;
 }

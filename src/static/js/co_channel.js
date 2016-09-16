@@ -8,22 +8,19 @@ var chatItemTemplate = function (chat) {
     var name = chat.name;
     var content = chat.content;
     var time = chat.created_time;
+    var avatar = "https://avatars0.githubusercontent.com/u/7235381?v=3&amp;s=30";
     var t = `
         <div class="chat-item">
-            <div>
-                 <div class="chat-item__avatar">
-                      <img src="https://avatars0.githubusercontent.com/u/7235381?v=3&amp;s=30"  height="30" width="30" class="avatar__image" alt="">
-                 </div>
-                 <div class="chat-item__details">
-                    <span>${name}</span>
-                    <a href="#">
-                        <time data-time="${time}"></time>
-                    </a>
-                </div>
+            <div class="chat-item__details">
+                <img src="${avatar}" class="user-avatar">
+                <span class="user-name">${name}</span>
+                <a href="#">
+                    <time data-time="${time}"></time>
+                </a>
             </div>
             <div class="chat-item__content">
-                    ${content}
-            </div>
+               ${content}
+            </div>            
         </div>
         `;
     return t;
@@ -72,6 +69,27 @@ var sendMessage = function (channel) {
     $.ajax(request);
 };
 
+// 加载 最后一页的 聊天信息 20条
+var loadLastChatList = function (channel) {
+    var request = {
+        url: '/' + channel + '/list',
+        type: 'GET',
+        dataType: 'json',
+        success: function (chats) {
+            log('load messages success', chats, typeof (chat));
+            $(chats).each(function (i, chat) {
+                chat = JSON.parse(chat);
+                insertChatItem(chat)
+            })
+        },
+        error: function (err) {
+            log('load messages error', err);
+        }
+    };
+    $.ajax(request);
+};
+
+
 var bindActions = function (channel) {
     $('#id-button-send').on('click', function () {
         // $('#id-input-content').val();
@@ -88,6 +106,7 @@ var activeChannel = function (channel) {
         }
     })
 };
+
 // long time ago
 var longTimeAgo = function () {
     var timeAgo = function (time, ago) {
@@ -125,6 +144,7 @@ var __main = function () {
     var channel = $('#currentChannel').data('name');
     console.log(channel, arguments);
     activeChannel(channel);
+    loadLastChatList(channel);
     subscribe(channel);
     bindActions(channel);
     setInterval(function () {

@@ -46,7 +46,7 @@ The content `<div>` is where all your content goes.
     margin: 0 auto;
     padding: 0 2em;
     max-height: 80%;
-    max-width: 800px;
+    /*max-width: 800px;*/
     margin-bottom: 50px;
     line-height: 1.6em;
 }
@@ -266,3 +266,44 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
 }
 
+a.pure-menu-link.active {
+    background-color: #135480;
+}
+
+.chat-item {
+    margin: 10px;
+    width: 100%;
+    float: left;
+}
+
+.chat-item__details {
+    line-height: 2.5em;
+}
+
+img.user-avatar {
+    height: 2.5em;
+    width: 2.5em;
+    position: relative;
+    top: 1em;
+}
+
+.user-name {
+    content: '匿名';
+    color: #1f8dd6;
+    font-size: 1em;
+    display: inline-block;
+    margin-left: 0.5em;
+}
+
+.chat-item__details a {
+    text-decoration: none;
+    color: #565d64;
+    font-size: 0.8em;
+    margin-left: 3em;
+    display: inline-block;
+
+}
+
+.chat-item__content {
+    margin-left: 3em;
+}

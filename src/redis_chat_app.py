@@ -46,6 +46,28 @@ def channel(channel):
         return render_template('channel.html', **data)
 
 
+@app.route('/<channel>/list', methods=['GET'])
+def channel_list(channel):
+    if not exist_channel(channel):
+        abort(404)
+    else:
+        args = request.args
+        start = args.get('start', -20)
+        end = args.get('end', -1)  # -1 get all
+        messages = redis_client.lrange(channel, start=start, end=end)  # 按时间顺序排列
+        messages = json.dumps(messages)
+        return messages, 200
+
+
+@app.route('/<channel>/clear', methods=['GET'])
+def channel_clear(channel):
+    if not exist_channel(channel):
+        abort(404)
+    else:
+        redis_client.delete(channel)
+        return 'OK'
+
+
 @app.route('/<channel>/add', methods=['POST'])
 def channel_add(channel):
     if not exist_channel(channel):
@@ -62,6 +84,7 @@ def channel_add(channel):
         message = json.dumps(r)
         print('debug\nmessge: {}\nchannel: {}'.format(message, channel))
         redis_client.publish(channel, message)
+        redis_client.rpush(channel, message)
         # 用 redis 发布消息
         return 'OK', 200
 
