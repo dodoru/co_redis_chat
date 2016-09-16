@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天室</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/pure-min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/co_style.css') }}">
+</head>
+<body data-channel="public">
+<div id="layout">
+    <a href="#menu" id="menuLink" class="menu-link">
+        <span></span>
+    </a>
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">聊天室</a>
+            <ul class="pure-menu-list" id="id-channel-list">
+                {% for channel_name,channel_title in chat_channels.items() %}
+                    <li class="pure-menu-item">
+                        <a href="{{ url_for('channel',channel=channel_name) }}" class="pure-menu-link"
+                           data-channel="{{ channel_name }}">{{ channel_title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div id="container">
+        <div id="main">
+            {% block board %}
+                <div id="id-div-board">
+                    <h4 id="currentChannel" data-name="{{ channel_name }}">{{ channel_name }} - {{ channel_title }}</h4>
+                </div>
+            {% endblock %}
+
+            <div class="content" id="id-div-chats">
+            </div>
+            <div id="id-div-panel">
+                <form class="pure-form pure-form-stacked" style="width: 100%">
+                    <input id='id-input-name' class="sai-form-line" type="text" placeholder="名字">
+                    <textarea id='id-input-content' class="sai-form-block" placeholder="内容"></textarea>
+                    <button id='id-button-send' type='button'>发送消息</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block script %}
+{% endblock %}
+</body>
+</html>

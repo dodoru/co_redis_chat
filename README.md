@@ -1,4 +1,11 @@
 
+Co Redis Chat 
+多频道的即时聊天室
+
+1 
+
+
+
 # Python 3.5
 >python -V  # check python verion == 3.5
 pyenv versions 
