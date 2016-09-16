@@ -6,6 +6,7 @@
     <title>聊天室</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/pure-min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/co_style.css') }}">
 </head>
 <body data-channel="public">
 <div id="layout">
@@ -26,20 +27,23 @@
         </div>
     </div>
 
-    <div id="main">
+    <div id="container">
+        <div id="main">
+            {% block board %}
+                <div id="id-div-board">
+                    <h4 id="currentChannel" data-name="{{ channel_name }}">{{ channel_name }} - {{ channel_title }}</h4>
+                </div>
+            {% endblock %}
 
-        {% block board %}
-
-        {% endblock %}
-
-        <div class="content" id="id-div-chats">
-        </div>
-        <div class="editor">
-            <form class="pure-form pure-form-stacked">
-                <input id='id-input-name' type="text" placeholder="名字">
-                <textarea id='id-input-content' placeholder="内容"></textarea>
-                <button id='id-button-send' type='button'>发送消息</button>
-            </form>
+            <div class="content" id="id-div-chats">
+            </div>
+            <div id="id-div-panel">
+                <form class="pure-form pure-form-stacked" style="width: 100%">
+                    <input id='id-input-name' class="sai-form-line" type="text" placeholder="名字">
+                    <textarea id='id-input-content' class="sai-form-block" placeholder="内容"></textarea>
+                    <button id='id-button-send' type='button'>发送消息</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

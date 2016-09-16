@@ -29,8 +29,8 @@ def ping():
 
 @app.route('/')
 def index():
-    return render_template('base.html')
-    # return redirect(url_for('channel', channel='chat'))
+    # return render_template('base.html')
+    return redirect(url_for('channel', channel='chat'))
     # return 'pong'
 
 
