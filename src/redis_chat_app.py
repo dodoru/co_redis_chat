@@ -52,11 +52,25 @@ def channel_list(channel):
         abort(404)
     else:
         args = request.args
-        start = args.get('start', -20)
-        end = args.get('end', -1)  # -1 get all
-        messages = redis_client.lrange(channel, start=start, end=end)  # 按时间顺序排列
-        messages = json.dumps(messages, indent=4)
-        return messages, 200
+        # end = int(args.get('end', -1))  # -1 get all
+        count = int(args.get('count', 5))
+        start = int(args.get('start', 0))
+        end = start + count
+        messages = redis_client.lrange(channel, start=start, end=end)  # 按时间倒序
+        number = len(messages)
+        if number < count:
+            next_cursor = -1
+        else:
+            next_cursor = end
+        data = {
+            'messages': messages,
+            'start': start,
+            'end': end,
+            'next_cursor': next_cursor,
+            'loaded': bool(next_cursor),
+        }
+        data = json.dumps(data, indent=4)
+        return data, 200
 
 
 @app.route('/<channel>/clear', methods=['GET'])
@@ -84,7 +98,7 @@ def channel_add(channel):
         message = json.dumps(r)
         print('debug\nmessge: {}\nchannel: {}'.format(message, channel))
         redis_client.publish(channel, message)
-        redis_client.rpush(channel, message)
+        redis_client.lpush(channel, message)
         # 用 redis 发布消息
         return 'OK', 200
 

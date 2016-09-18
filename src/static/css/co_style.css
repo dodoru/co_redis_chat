@@ -1,3 +1,17 @@
+html {
+    font-size: 62.5%;
+    font-family: 'PingFang SC', Helvetica, sans-serif;
+}
+
+body {
+    color: black;
+    width: 100%;
+}
+
+.disabled {
+    cursor: not-allowed;
+    content: "已加载";
+}
 
 #menu a.pure-menu-heading {
     width: 150px;
@@ -6,6 +20,7 @@
     height: 50px;
     padding: 5px;
     text-align: center;
+    font-size: 1.6rem;
 }
 
 ul.pure-menu-list {
@@ -17,14 +32,15 @@ div#id-div-board {
     width: 100%;
     text-align: center;
     padding: 5px;
-    height: 50px;
+    /*height: 50px;*/
+    font-size: 1.6rem;
     /*border-bottom: 1px dashed #a5a2a6;*/
 }
 
 #id-div-panel {
     /*display: flex;*/
     /*position: fixed;*/
-    clear:both;
+    clear: both;
     line-height: 14px;
     bottom: 0;
     border-radius: 5px;
@@ -33,16 +49,19 @@ div#id-div-board {
 }
 
 #id-div-chats {
-    /*padding-bottom: 60em;*/
+    margin-top: 8rem;
 }
 
 #id-div-panel form {
-    border: 1px dashed #ccc;
+    /* border: 1px dashed #ccc; */
     margin: 2rem;
     padding: 2rem;
     right: 0;
     background-color: white;
+}
 
+input#id-input-name {
+    display: inline-block;
 }
 
 input.sai-form-line {
@@ -73,7 +92,7 @@ textarea.sai-form-block {
 
 button {
     padding: 4px 6px;
-    border: 1px solid #129fea;
+    border: 1px solid #cad2d3;
     border-radius: 5px;
     background-color: white;
     text-decoration: none;
@@ -82,8 +101,11 @@ button {
 }
 
 #id-button-send {
-    display: block;
-    color: #2284e0;
-    float: right;
+    display: inline-block;
+    color: #444;
+    position: relative;
     font-weight: 300;
+    float: right;
+    background-color: white;
+    height: 35px;
 }

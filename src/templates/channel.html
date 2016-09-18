@@ -3,6 +3,12 @@
 {% block board %}
     <div id="id-div-board">
         <h4 id="currentChannel" data-name="{{ channel_name }}">{{ channel_name }} - {{ channel_title }}</h4>
+        <span style="font-size: 0.8rem;">
+            <button class="pure-button" id="loadPageBtn" data-cursor_start="0" data-loaded="false"
+                    data-name="{{ channel_name }}">上一页</button>
+            <a href="/{{ channel_name }}/clear" target="_blank" class="pure-button">管理员清屏</a>
+            <a href="/{{ channel_name }}/list" target="_blank" class="pure-button">所有记录</a>
+        </span>
     </div>
 {% endblock %}
 

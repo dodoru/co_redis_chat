@@ -1,8 +1,3 @@
-body {
-    color: black;
-    width: 100%;
-    font-family: 'PingFang SC', Helvetica, sans-serif;
-}
 
 .pure-img-responsive {
     max-width: 100%;
@@ -103,9 +98,9 @@ All anchors inside the menu should be styled like this.
     color: #e5e5e5;
     border: none;
     padding: 0.6em;
-    font-size: 0.9em;
     font-family: 'PingFang SC', Helvetica, sans-serif;
     font-weight: lighter;
+    font-size: 1.3rem;
 }
 
 /*
@@ -270,23 +265,39 @@ a.pure-menu-link.active {
     background-color: #135480;
 }
 
-
-
 .chat-item {
     margin: 10px;
-    width: 100%;
-    float: left;
+    width: 90%;
+    /*float: left;*/
+    border-bottom: 1px dashed #ececec;
+    padding-bottom: 1.8rem;
+    border-radius: 1rem;
 }
 
-.chat-item__details {
-    line-height: 2.5em;
-}
-
-img.user-avatar {
-    height: 2.5em;
-    width: 2.5em;
+.user {
     position: relative;
-    top: 1em;
+    height: 3.2rem;
+    padding-left: 0.5rem;
+}
+
+.user-avatar {
+    position: relative;
+    display: inline-block;
+    border-radius: 1.0rem;
+    width: 3.2rem;
+    height: 3.2rem;
+}
+
+.user-avatar img {
+    height: 2.8rem;
+    width: 2.8rem;
+}
+
+.user-info {
+    position: relative;
+    left: 0.5rem;
+    text-align: left;
+    display: inline-block;
 }
 
 .user-name {
@@ -294,7 +305,22 @@ img.user-avatar {
     color: #1f8dd6;
     font-size: 1em;
     display: inline-block;
-    margin-left: 0.5em;
+    line-height: 1.7rem;
+    font-family: "Heiti SC";
+}
+
+.pass-time {
+    font-size: 0.75rem;
+    font-family: "Heiti SC";
+    color: #A2A5A8;
+    font-weight: lighter;
+    line-height: 1.5rem;
+}
+
+.user_content {
+    margin-left: 4.5rem;
+    font-size: 1.5rem;
+
 }
 
 .chat-item__details a {
@@ -306,14 +332,3 @@ img.user-avatar {
 
 }
 
-.chat-item__content {
-    margin-left: 3em;
-}
-
-
-#id-div-panel form {
-    border: 1px dashed #ccc;
-    margin: 2rem;
-    padding:2rem;
-    right:0;
-}

@@ -8,17 +8,19 @@ var chatItemTemplate = function (chat) {
     var name = chat.name;
     var content = chat.content;
     var time = chat.created_time;
-    var avatar = "https://avatars0.githubusercontent.com/u/7235381?v=3&amp;s=30";
+    var avatar = "https://cdn.v2ex.co/gravatar/" + name + "?s=73&d=retro";
     var t = `
         <div class="chat-item">
-            <div class="chat-item__details">
-                <img src="${avatar}" class="user-avatar">
-                <span class="user-name">${name}</span>
-                <a href="#">
-                    <time data-time="${time}"></time>
-                </a>
+            <div class="user">
+                <div class="user-avatar"><img src="${avatar}" class="user-avatar"></div>
+                <div class="user-info">
+                    <div class="user-name">${name}</div>
+                    <div class="pass-time" href="#">
+                        <time data-time="${time}"></time>
+                    </div>
+                </div>
             </div>
-            <div class="chat-item__content">
+            <div class="user_content">
                ${content}
             </div>            
         </div>
@@ -26,15 +28,22 @@ var chatItemTemplate = function (chat) {
     return t;
 };
 
-var insertChatItem = function (chat) {
+var appendChatItem = function (chat) {
     var chats = $('#id-div-chats');
     var t = chatItemTemplate(chat);
     chats.append(t);
 };
 
+var prependChatItem = function (chat) {
+    var chats = $('#id-div-chats');
+    var t = chatItemTemplate(chat);
+    chats.prepend(t);
+};
+
 var chatResponse = function (r) {
     var chat = JSON.parse(r);
-    insertChatItem(chat);
+    appendChatItem(chat);
+    incLoadCursor(); // fixme
 };
 
 var subscribe = function (channel) {
@@ -68,25 +77,74 @@ var sendMessage = function (channel) {
     };
     $.ajax(request);
 };
+var updateLoadCursor = function (cursor) {
+    var sel = $('#loadPageBtn');
+    sel.data('cursor_start', cursor);
+    sel.attr('data-cursor_start', cursor);
+    loadPageCursor(cursor);
+};
 
+var loadPageCursor = function (cursor) {
+    if (cursor == -1 || cursor == null || cursor == undefined) {
+        disableLoadBtn();
+        return false;
+    } else {
+        return true;
+    }
+};
+
+function disableLoadBtn() {
+    var sel = $('#loadPageBtn');
+    sel.addClass('disabled');
+    sel.attr('disabled', 'disabled');
+    sel.attr('data-loaded', 'true');
+    sel.text('已全部加载');
+}
+
+var incLoadCursor = function () {
+    var cursor = $('#loadPageBtn').data('cursor_start');
+    if (loadPageCursor(cursor)) {
+        cursor = cursor - 1;
+        updateLoadCursor(cursor);
+    }
+};
 // 加载 最后一页的 聊天信息 20条
-var loadLastChatList = function (channel) {
-    var request = {
-        url: '/' + channel + '/list',
-        type: 'GET',
-        dataType: 'json',
-        success: function (chats) {
-            log('load messages success', chats, typeof (chat));
-            $(chats).each(function (i, chat) {
-                chat = JSON.parse(chat);
-                insertChatItem(chat)
-            })
-        },
-        error: function (err) {
-            log('load messages error', err);
-        }
-    };
-    $.ajax(request);
+var loadChatPage = function (channel) {
+    var cursor = $('#loadPageBtn').data('cursor_start');
+    var flag = loadPageCursor(cursor);
+    console.log('cursor_start', cursor);
+    if (flag) {
+        var request = {
+            url: '/' + channel + '/list?start=' + cursor,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                log('load messages success', data);
+                var chats = data.messages;
+                var next_cursor = data.next_cursor;
+                var loaded = data.loaded;
+                console.log(chats, data, next_cursor);
+                updateLoadCursor(next_cursor);
+                if (loaded == false) {
+                    disableLoadBtn();
+                }
+                $(chats).each(function (i, chat) {
+                    chat = JSON.parse(chat);
+                    prependChatItem(chat)
+                })
+            },
+            error: function (err) {
+                log('load messages error', err);
+            }
+        };
+        $.ajax(request);
+    }
+};
+
+var bindLoadPage = function (channel) {
+    $('#loadPageBtn').on('click', function () {
+        loadChatPage(channel)
+    });
 };
 
 
@@ -144,9 +202,10 @@ var __main = function () {
     var channel = $('#currentChannel').data('name');
     console.log(channel, arguments);
     activeChannel(channel);
-    loadLastChatList(channel);
+    loadChatPage(channel);
     subscribe(channel);
     bindActions(channel);
+    bindLoadPage(channel);
     setInterval(function () {
         longTimeAgo();
     }, 1000);
