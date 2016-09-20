@@ -36,7 +36,10 @@
             {% endblock %}
 
             <div class="content" id="id-div-chats">
+                {% block content %}
+                {% endblock %}
             </div>
+
             <div id="id-div-panel">
                 <form class="pure-form pure-form-stacked" style="width: 100%">
                     <textarea id='id-input-content' class="sai-form-block" placeholder="内容"></textarea>

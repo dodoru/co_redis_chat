@@ -24,4 +24,4 @@ gunicorn --log-level debug --access-logfile gunicorn.log --worker-class=gevent -
 ___
 
 预览图
- ![image](https://github.com/dodoru/redis-chat/blob/master/img/001.png)
+ ![image](https://github.com/dodoru/co-redis-chat/blob/master/img/001.png)

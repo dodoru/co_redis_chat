@@ -1,12 +1,19 @@
 # coding: utf-8
-from src.redis_channel import stream, redis_client, Chat_Channels, exist_channel
 
-from flask import Flask
-from flask import request
-from flask import render_template
-from flask import redirect, url_for, Response, abort
+import logging
 import time
 import json
+
+from flask import (
+    Flask,
+    request,
+    render_template,
+    redirect,
+    url_for,
+    abort,
+    Response,
+)
+from src.redis_channel import stream, redis_client, Chat_Channels, exist_channel
 
 app = Flask(__name__)
 app.secret_key = 'key'
@@ -62,15 +69,23 @@ def channel_list(channel):
             next_cursor = -1
         else:
             next_cursor = end
-        data = {
-            'messages': messages,
-            'start': start,
-            'end': end,
-            'next_cursor': next_cursor,
-            'loaded': bool(next_cursor),
-        }
-        data = json.dumps(data, indent=4)
-        return data, 200
+        if args.get('html') is None:
+            data = {
+                'messages': messages,
+                'start': start,
+                'end': end,
+                'next_cursor': next_cursor,
+                'loaded': bool(next_cursor),
+            }
+            data = json.dumps(data, indent=0, separators=(',', ': '))
+            return data, 200
+        else:
+            data = dict(
+                channel_name=channel,
+                channel_title=Chat_Channels.get(channel),
+                chats=[json.loads(x) for x in messages]
+            )
+            return render_template('chats.html', **data)
 
 
 @app.route('/<channel>/clear', methods=['GET'])
@@ -79,7 +94,9 @@ def channel_clear(channel):
         abort(404)
     else:
         redis_client.delete(channel)
-        return 'OK'
+        message = '[clear {}]'.format(channel)
+        logging.info(message)
+        return redirect(url_for('channel', channel=channel))
 
 
 @app.route('/<channel>/add', methods=['POST'])
